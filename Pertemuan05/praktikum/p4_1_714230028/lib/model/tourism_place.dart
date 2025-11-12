@@ -1,4 +1,3 @@
-// Langkah 22 & 23: Buat data class
 class TourismPlace {
   String name;
   String location;
@@ -21,9 +20,6 @@ class TourismPlace {
   });
 }
 
-// Langkah 24: Siapkan data statis
-// (Data list ini tidak disediakan di PDF, jadi saya buatkan berdasarkan
-// screenshot dan data dari praktikum)
 var tourismPlaceList = [
   TourismPlace(
     name: 'Farm House Lembang',
@@ -34,7 +30,7 @@ var tourismPlaceList = [
     openTime: '09:00 - 18:00',
     ticketPrice: 'Rp 30.000',
     imageAsset:
-        'images/farm-house.jpg', // Pastikan gambar ini ada di folder images/
+        'images/farm-house.jpg', 
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/58/9b/farmhouse-lembang.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/58/a5/farmhouse-lembang.jpg',
@@ -50,7 +46,7 @@ var tourismPlaceList = [
     openTime: '09:00-14:30',
     ticketPrice: 'RP 20000',
     imageAsset:
-        'images/bosscha.jpg', // Pastikan gambar ini ada di folder images/
+        'images/bosscha.jpg',
     imageUrls: [
       'https://www.rancaupas.id/wp-content/uploads/2022/09/DSC05254-2-1024x683.jpg',
       'https://www.rancaupas.id/wp-content/uploads/2023/08/Ranca-Upas-Igloo-Camp-Ciwidey.jpg',
@@ -66,7 +62,7 @@ var tourismPlaceList = [
     openTime: '24 Jam',
     ticketPrice: 'Gratis',
     imageAsset:
-        'images/jalan-asia-afrika.jpg', // Pastikan gambar ini ada di folder images/
+        'images/jalan-asia-afrika.jpg', 
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0f/d6/1c/f9/gedung-merdeka.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0f/d6/1c/fa/gedung-merdeka.jpg',
@@ -82,7 +78,7 @@ var tourismPlaceList = [
     openTime: '06:00 - 17:00',
     ticketPrice: 'Rp 10.000',
     imageAsset:
-        'images/stone-garden.jpg', // Pastikan gambar ini ada di folder images/
+        'images/stone-garden.jpg',
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a1/stone-garden-citatah.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a2/stone-garden-citatah.jpg',
@@ -98,7 +94,7 @@ var tourismPlaceList = [
     openTime: '24 Jam',
     ticketPrice: 'Gratis',
     imageAsset:
-        'images/taman-film.jpg', // Pastikan gambar ini ada di folder images/
+        'images/taman-film.jpg', 
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a1/stone-garden-citatah.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a2/stone-garden-citatah.jpg',
@@ -114,7 +110,7 @@ var tourismPlaceList = [
     openTime: '09:00 - 15:00',
     ticketPrice: 'Rp 3.000',
     imageAsset:
-        'images/museum-geologi.jpg', // Pastikan gambar ini ada di folder images/
+        'images/museum-geologi.jpg', 
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a1/stone-garden-citatah.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a2/stone-garden-citatah.jpg',
@@ -130,7 +126,7 @@ var tourismPlaceList = [
     openTime: '09:00 - 18:00',
     ticketPrice: 'Rp 35.000',
     imageAsset:
-        'images/floating-market.png', // Pastikan gambar ini ada di folder images/
+        'images/floating-market.png', 
     imageUrls: [
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a1/stone-garden-citatah.jpg',
       'https://media-cdn.tripadvisor.com/media/photo-s/0a/e3/b0/a2/stone-garden-citatah.jpg',
@@ -146,7 +142,7 @@ var tourismPlaceList = [
     openTime: '07:00-17:00',
     ticketPrice: 'RP 15000',
     imageAsset:
-        'images/kawah-putih.jpg', // Pastikan gambar ini ada di folder images/
+        'images/kawah-putih.jpg', 
     imageUrls: [
       'https://cdn.idntimes.com/content-images/post/20201106/19437168-453398458365585-5644109604204838912-n-8b901f7c5f367e2a603c661c470a7d8d.jpg',
       'https://cdn.idntimes.com/content-images/post/20201106/34091980-2204188269801480-248274445720879104-n-10f8a84666066d3a3959b8a5b2b005e8.jpg',
@@ -161,7 +157,7 @@ var tourismPlaceList = [
     openDays: 'Setiap Hari',
     openTime: '07.00 - 17.00',
     ticketPrice: 'Rp 20.000',
-    imageAsset: 'images/ranca-upas.jpg', // Gunakan gambar dari PDF
+    imageAsset: 'images/ranca-upas.jpg', 
     imageUrls: [
       'https://www.rancaupas.id/wp-content/uploads/2022/09/DSC05254-2-1024x683.jpg',
       'https://www.rancaupas.id/wp-content/uploads/2023/08/Ranca-Upas-Igloo-Camp-Ciwidey.jpg',

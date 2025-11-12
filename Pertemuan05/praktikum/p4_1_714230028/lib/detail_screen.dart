@@ -53,34 +53,30 @@ class DetailScreen extends StatelessWidget {
               ),
             ),
 
-            // Bagian Informasi (Row) (Langkah 14 & 27)
             Container(
               margin: const EdgeInsets.symmetric(vertical: 16.0),
-              // Hapus 'const' dari Row (Langkah 14)
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Hari Buka
                   Column(
                     children: [
                       const Icon(Icons.calendar_today, color: Colors.blue),
                       const SizedBox(height: 8.0),
                       Text(
-                        place.openDays, // Gunakan data dari 'place'
+                        place.openDays, 
                         style:
-                            iniFontCustom, // Terapkan font custom (Langkah 14)
+                            iniFontCustom, 
                       ),
                     ],
                   ),
-                  // Jam Operasional
                   Column(
                     children: [
                       const Icon(Icons.access_time, color: Colors.blue),
                       const SizedBox(height: 8.0),
                       Text(
-                        place.openTime, // Gunakan data dari 'place'
+                        place.openTime, 
                         style:
-                            iniFontCustom, // Terapkan font custom (Langkah 14)
+                            iniFontCustom, 
                       ),
                     ],
                   ),
@@ -90,9 +86,9 @@ class DetailScreen extends StatelessWidget {
                       const Icon(Icons.monetization_on, color: Colors.blue),
                       const SizedBox(height: 8.0),
                       Text(
-                        place.ticketPrice, // Gunakan data dari 'place'
+                        place.ticketPrice, 
                         style:
-                            iniFontCustom, // Terapkan font custom (Langkah 14)
+                            iniFontCustom, 
                       ),
                     ],
                   ),
@@ -100,27 +96,23 @@ class DetailScreen extends StatelessWidget {
               ),
             ),
 
-            // Bagian Deskripsi (Langkah 27)
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                place.description, // Gunakan data dari 'place'
+                place.description, 
                 textAlign: TextAlign.justify,
                 style: const TextStyle(fontSize: 16.0),
               ),
             ),
 
-            // Galeri Gambar Horizontal (Langkah 8, 9, 10, 11, 28)
             SizedBox(
               height: 150,
               child: ListView(
-                scrollDirection: Axis.horizontal, // (Langkah 9)
-                // Gunakan data list 'imageUrls' dari 'place' (Langkah 28)
+                scrollDirection: Axis.horizontal, 
                 children: place.imageUrls.map((url) {
                   return Padding(
-                    padding: const EdgeInsets.all(4.0), // (Langkah 10)
+                    padding: const EdgeInsets.all(4.0), 
                     child: ClipRRect(
-                      // (Langkah 11)
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(url),
                     ),

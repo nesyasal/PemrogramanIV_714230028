@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:ats_flutter/main.dart';
 import 'package:ats_flutter/models/contact.dart';
 import 'package:ats_flutter/utils/validator.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'dart:io';
 
@@ -64,12 +65,12 @@ class _ContactListScreenState extends ConsumerState<ContactListScreen> {
 
     if (result != null) {
       setState(() {
-        // Menyimpan nama file (atau path/nama sesuai kebutuhan)
-        // Gunakan result.files.first.name jika Anda hanya perlu nama
-        // Gunakan result.files.first.path jika Anda perlu path lengkap
-        _selectedFilePath = result.files.first.name;
+        // *** PERBAIKAN UTAMA DI SINI ***
+        // Menyimpan path lengkap (.path) agar Image.file dapat mengaksesnya
+        _selectedFilePath = result.files.first.path;
       });
       if (mounted) {
+        // Tampilkan nama file yang dipilih untuk konfirmasi pengguna
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('File Terpilih: ${result.files.first.name}')),
         );
@@ -85,46 +86,86 @@ class _ContactListScreenState extends ConsumerState<ContactListScreen> {
   }
 
   // Color Picker Sederhana (Custom)
-  Widget _buildSimpleColorPicker() {
-    final List<Color> predefinedColors = [
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.orange,
-      Colors.purple,
-    ];
+  // Widget _buildSimpleColorPicker() {
+  //   final List<Color> predefinedColors = [
+  //     Colors.red,
+  //     Colors.blue,
+  //     Colors.green,
+  //     Colors.orange,
+  //     Colors.purple,
+  //   ];
 
-    return Wrap(
-      spacing: 10.0,
-      runSpacing: 10.0,
-      children: predefinedColors.map((color) {
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedColor = color;
-            });
-            // Tutup dialog setelah memilih warna
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: _selectedColor == color
-                    ? Colors.black
-                    : Colors.transparent,
-                width: 3,
-              ),
-              boxShadow: const [
-                BoxShadow(color: Colors.black26, blurRadius: 3),
-              ],
+  //   return Wrap(
+  //     spacing: 10.0,
+  //     runSpacing: 10.0,
+  //     children: predefinedColors.map((color) {
+  //       return GestureDetector(
+  //         onTap: () {
+  //           setState(() {
+  //             _selectedColor = color;
+  //           });
+  //           // Tutup dialog setelah memilih warna
+  //           Navigator.of(context).pop();
+  //         },
+  //         child: Container(
+  //           width: 40,
+  //           height: 40,
+  //           decoration: BoxDecoration(
+  //             color: color,
+  //             shape: BoxShape.circle,
+  //             border: Border.all(
+  //               color: _selectedColor == color
+  //                   ? Colors.black
+  //                   : Colors.transparent,
+  //               width: 3,
+  //             ),
+  //             boxShadow: const [
+  //               BoxShadow(color: Colors.black26, blurRadius: 3),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     }).toList(),
+  //   );
+  // }
+
+  void _showColorPickerDialog() {
+    Color _pickerColor = _selectedColor;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick Your Color'),
+          content: SingleChildScrollView(
+            // Widget ColorPicker dari package 'flutter_colorpicker'
+            child: ColorPicker(
+              pickerColor: _pickerColor, // Warna awal
+              onColorChanged: (color) {
+                // Simpan warna yang diubah ke variabel sementara
+                _pickerColor = color;
+              },
+              // Opsi untuk tampilan seperti gambar:
+              paletteType:
+                  PaletteType.hsv, // Mode HSV/HSL untuk pemilihan kontinu
+              enableAlpha: true, // Memungkinkan transparansi (nilai A di RGBA)
+              showLabel: true, // Menampilkan nilai RGBA
+              pickerAreaBorderRadius: BorderRadius.circular(5.0),
             ),
           ),
+          actions: <Widget>[
+            // Tombol Save (menggantikan logika sebelumnya yang langsung pop)
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () {
+                // Perbarui state warna utama hanya saat "Save" ditekan
+                setState(() => _selectedColor = _pickerColor);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
-      }).toList(),
+      },
     );
   }
 
@@ -286,23 +327,7 @@ class _ContactListScreenState extends ConsumerState<ContactListScreen> {
               ),
               const SizedBox(width: 12.0),
               ElevatedButton.icon(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Select a Color'),
-                        content: _buildSimpleColorPicker(),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('Close'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                onPressed: _showColorPickerDialog,
                 icon: const Icon(Icons.color_lens),
                 label: const Text('Pick Color'),
                 style: ElevatedButton.styleFrom(

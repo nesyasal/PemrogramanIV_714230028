@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'user.dart';
 import 'package:flutter/foundation.dart';
 import 'user.dart';
 
@@ -28,7 +27,7 @@ class DataService {
     }
   }
 
-  Future postUser(UserCreate user) async {
+  Future<UserCreate?> postUser(UserCreate user) async {
     try {
       final response = await dio.post('/users', data: user.toMap());
 
@@ -49,7 +48,8 @@ class DataService {
     }
   }
 
-  Future putUser(String idUser, String name, String job) async {
+  
+  Future<UserUpdate?> putUser(String idUser, String name, String job) async {
     try {
       final response = await dio.put(
         '/users/$idUser',
@@ -60,7 +60,7 @@ class DataService {
       debugPrint('DATA: ${response.data}');
 
       if (response.statusCode == 200) {
-        return response.data;
+        return UserUpdate.fromJson(response.data);
       }
       return null;
     } on DioException catch (e) {

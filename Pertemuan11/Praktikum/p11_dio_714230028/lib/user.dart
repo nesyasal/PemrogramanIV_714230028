@@ -51,3 +51,25 @@ class UserCreate {
     );
   }
 }
+
+class UserUpdate {
+  String name;
+  String job;
+  String? updatedAt;
+
+  UserUpdate({required this.name, required this.job, this.updatedAt});
+
+  factory UserUpdate.fromJson(Map<String, dynamic> data) {
+    tz.initializeTimeZones();
+    final jakartaTimeZone = tz.getLocation('Asia/Jakarta');
+    final nowInJakarta = tz.TZDateTime.now(jakartaTimeZone);
+    final result = DateFormat.yMd().add_jm().format(nowInJakarta);
+
+    return UserUpdate(
+      name: data['name'],
+      job: data['job'],
+      updatedAt:
+          result, 
+    );
+  }
+}

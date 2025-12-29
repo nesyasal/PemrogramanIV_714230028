@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'data_service.dart';
 import 'user.dart';
-import 'user_card.dart'; 
+import 'user_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   String _result = '-';
   List<User> _users = [];
-  UserCreate? usCreate;
+  UserCreate? usCreate; // Untuk hasil POST
+  UserUpdate? usUpdate; // Untuk hasil PUT (Tugas)
 
   @override
   void dispose() {
@@ -40,7 +41,6 @@ class _HomePageState extends State<HomePage> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          // Mencegah overflow pada layar kecil
           padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,12 +73,15 @@ class _HomePageState extends State<HomePage> {
                       job: _jobCtl.text,
                     );
                     final res = await _dataService.postUser(postModel);
-                    setState(() {
-                      _result = res.toString();
-                      usCreate = res;
-                    });
-                    _nameCtl.clear();
-                    _jobCtl.clear();
+                    if (res != null) {
+                      setState(() {
+                        _result = res.toString();
+                        usCreate = res;
+                        usUpdate = null; // Hapus hasil PUT jika ada
+                      });
+                      _nameCtl.clear();
+                      _jobCtl.clear();
+                    }
                   }),
                   const SizedBox(width: 8),
                   _buildActionButton('PUT', () async {
@@ -86,14 +89,21 @@ class _HomePageState extends State<HomePage> {
                       displaySnackbar('Semua field harus diisi');
                       return;
                     }
+                    
                     final res = await _dataService.putUser(
                       '3',
                       _nameCtl.text,
                       _jobCtl.text,
                     );
-                    setState(() => _result = res.toString());
-                    _nameCtl.clear();
-                    _jobCtl.clear();
+                    if (res != null) {
+                      setState(() {
+                        _result = res.toString();
+                        usUpdate = res; // Simpan hasil PUT
+                        usCreate = null; // Hapus hasil POST jika ada
+                      });
+                      _nameCtl.clear();
+                      _jobCtl.clear();
+                    }
                   }),
                   const SizedBox(width: 8),
                   _buildActionButton('DELETE', () async {
@@ -127,7 +137,8 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         _result = '-';
                         _users.clear();
-                        usCreate = null;
+                        usCreate = null; // Reset hasil POST
+                        usUpdate = null; // Reset hasil PUT
                       });
                     },
                     child: const Text('Reset'),
@@ -143,18 +154,19 @@ class _HomePageState extends State<HomePage> {
               const Divider(),
 
               // --- Tampilan Hasil ---
-              Container(
-                constraints: const BoxConstraints(
-                  minHeight: 100,
-                  maxHeight: 300,
-                ),
+              SizedBox(
                 width: double.infinity,
                 child: _users.isEmpty
-                    ? SingleChildScrollView(child: Text(_result))
-                    : _buildListUser(),
+                    ? Text(_result)
+                    : Container(
+                        constraints: const BoxConstraints(maxHeight: 300),
+                        child: _buildListUser(),
+                      ),
               ),
 
               const SizedBox(height: 20),
+              
+              // --- Tampilkan Kartu Hasil POST atau PUT ---
               _buildHasilCard(),
             ],
           ),
@@ -190,7 +202,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildListUser() {
     return ListView.separated(
-      shrinkWrap: true, // Agar ListView bisa berada di dalam Column
+      shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemCount: _users.length,
       separatorBuilder: (context, index) => const SizedBox(height: 8),
@@ -208,8 +220,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHasilCard() {
-    if (usCreate == null)
-      return const Center(child: Text('No data created yet'));
-    return Center(child: UserCard(usrCreate: usCreate!));
+    return Center(
+      child: Column(
+        children: [
+          if (usCreate != null) UserCard(usrCreate: usCreate!),
+          if (usUpdate != null) PutCard(usrUpdate: usUpdate!), // Kartu PUT
+          if (usCreate == null && usUpdate == null) const Text('no data'),
+        ],
+      ),
+    );
   }
 }

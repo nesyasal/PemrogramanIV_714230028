@@ -17,67 +17,69 @@ class UserCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          /// ID
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 70,
-                child: Text(
-                  'ID',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(width: 220, child: Text(': ${usrCreate.id}')),
-            ],
-          ),
-
-          /// NAME
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 70,
-                child: Text(
-                  'Name',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(width: 220, child: Text(': ${usrCreate.name}')),
-            ],
-          ),
-
-          /// JOB
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 70,
-                child: Text(
-                  'Job',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(width: 220, child: Text(': ${usrCreate.job}')),
-            ],
-          ),
-
-          /// CREATED AT
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 70,
-                child: Text(
-                  'Created At',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(width: 220, child: Text(': ${usrCreate.createdAt}')),
-            ],
-          ),
+          _buildRow('ID', ': ${usrCreate.id}'),
+          _buildRow('Name', ': ${usrCreate.name}'),
+          _buildRow('Job', ': ${usrCreate.job}'),
+          _buildRow('Created At', ': ${usrCreate.createdAt}'),
         ],
       ),
+    );
+  }
+
+  Widget _buildRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 80, 
+          child: Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(child: Text(value)),
+      ],
+    );
+  }
+}
+
+class PutCard extends StatelessWidget {
+  final UserUpdate usrUpdate;
+
+  const PutCard({super.key, required this.usrUpdate});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      width: 400,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.orange[200], 
+      ),
+      child: Column(
+        children: [
+          _buildRow('Name', ': ${usrUpdate.name}'),
+          _buildRow('Job', ': ${usrUpdate.job}'),
+          _buildRow('Updated At', ': ${usrUpdate.updatedAt}'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 90, 
+          child: Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(child: Text(value)),
+      ],
     );
   }
 }
